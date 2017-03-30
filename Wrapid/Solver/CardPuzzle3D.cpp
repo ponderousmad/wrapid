@@ -144,6 +144,6 @@ namespace
     };
 }
 
-DECLARE_TEST(CardPuzzle3DTest );
+DECLARE_TEST( CardPuzzle3DTest );
 
 #endif // BUILD_TESTS
