@@ -1,0 +1,178 @@
+This program solves hour puzzles. In this puzzle you need to place the
+numbers from 1 to 12 on the grid twice such that numbers are only allowed
+to be adjacent to each other if they are on a clock face.
+
+Here's an example:
++----+----+----+----+----+----+
+| 12 |              |       7 |
++    +    +----+    +----+    +
+|    |    |    |              |
++    +    +    +    +----+----+
+|         |                   |
++----+    +----+----+----+    +
+|  9                        2 |
++----+----+----+----+----+----+
+
+Solving . . . .  0.0369992 ms
+
++----+----+----+----+----+----+
+| 12 |  7    6    5 |  8    7 |
++    +    +----+    +----+    +
+| 11 |  8 |  1 |  4    5    6 |
++    +    +    +    +----+----+
+| 10    9 |  2    3    4    3 |
++----+    +----+----+----+    +
+|  9   10   11   12    1    2 |
++----+----+----+----+----+----+
+
+In this case there's more than one solution.
+Solving . . . .  0.0102459 ms
+
++----+----+----+----+----+----+
+| 12 |  7    6    5 |  8    7 |
++    +    +----+    +----+    +
+| 11 |  8 |  3 |  4    5    6 |
++    +    +    +    +----+----+
+| 10    9 |  4    3    2    1 |
++----+    +----+----+----+    +
+|  9   10   11   12    1    2 |
++----+----+----+----+----+----+
+
+However, as soon as I thought about the problem of solving this puzzle,
+I immediately began to consider extensions.
+
+My first thought was to consider non-planar embeddings. For instance,
+this grid has the topology of a torus, you can wrap around either edge:
+
++----+----+----+----+    +----+
+|    |              |       7 |
++    +    +----+    +----+    +
+     |         |         |     
++    +----+    +----+----+----+
+|         | 12                |
++----+    +----+----+----+    +
+|                   |         |
++----+----+----+----+    +----+
+
+Solving . . . .  0.14572 ms
+
++----+----+----+----+    +----+
+|  6 |  1    2    3 |  6    7 |
++    +    +----+    +----+    +
+   7 | 12   11 |  4    5 |  8  
++    +----+    +----+----+----+
+|  8    9 | 12    1    2    3 |
++----+    +----+----+----+    +
+|  9   10   11   10 |  5    4 |
++----+----+----+----+    +----+
+
+Of course, the next step was to jump up to higher dimensions.
+
+When you do that, you start to increase the potential number
+of neighbours any cell has. So you need more than two of each
+option to have a reasonable chance of success. However, there are
+only 24 hours in a day (on earth anyway).
+
+Then it struck me that a deck of cards has just the right structure.
+The 52 card deck doesn't factor into 3 dimensions. But if you
+include the jokers, you now have 54 = 6 * 3 * 3. So I designed the
+solver to allow the sequence to be flexible, and added another
+dimension.
+
+So, in the following puzzle, the 'o's indicate a tunnel from one
+level of the puzzle to the level to the right. As in the previous
+puzzle, toroidal topologies are allowed which loop back around the
+'edges'. Here the symbols are A, 2 - 10, J, Q, K and ? for the joker.
+The joker is allowed to be adjacent to anything, including itself.
+
++----+----+----+ +----+----+----+ +----+----+----+
+|  Ko|       3 | |  Q |       9o| |  2 |         |
++    +    +----+ +    +    +----+ +    +    +----+
+|    |    |    | |    |    |    | |    |    |    |
++    +    +    + +    +    +    + +    +    +    +
+|    |    |    | |    |  6 |    | |    |    |  K |
++    +    +    + +    +    +    + +    +    +    +
+|    |    |    | |   o|    |  Jo| |    |    |    |
++    +    +    + +    +    +    + +    +    +    +
+|       6 |  Jo| |         |    | |    |    |    |
++----+    +----+ +----+----+    + +    +    +----+
+|              | |  2           | |  5o|  8      |
++----+----+----+ +----+----+----+ +----+----+----+
+
+Solving . . . .  1.66695 ms
+
++----+----+----+ +----+----+----+ +----+----+----+
+|  Ko|  4    3 | |  Q |  8    9o| |  2 |  9   10 |
++    +    +----+ +    +    +----+ +    +    +----+
+|  ? |  3 | 10 | |  K |  7 |  9 | |  A | 10 |  A |
++    +    +    + +    +    +    + +    +    +    +
+|  ? |  4 |  J | |  A |  6 | 10 | |  2 |  9 |  K |
++    +    +    + +    +    +    + +    +    +    +
+|  8 |  5 |  Q | |  2o|  5 |  Jo| |  3 |  8 |  Q |
++    +    +    + +    +    +    + +    +    +    +
+|  7    6 |  Jo| |  3    4 |  Q | |  4 |  7 |  J |
++----+    +----+ +----+----+    + +    +    +----+
+|  6    5    6 | |  2    A    K | |  5o|  8    7 |
++----+----+----+ +----+----+----+ +----+----+----+
+
+But wait, 6 is just 2 * 3, so obviously we should try and build,
+a 4 dimensional puzzle. This time the '@' symbol is used to show
+where you can move between the two 'volumes'. It helps that we have
+jokers in the puzzle, because a cell can have seven neighbours,
+such as the one in the middle of the lower volume.
+The maximum is seven because with only two volumes, a tunnel
+in either direction gets you the same place.
+
++----+----+----+ +----+----+----+ +----+----+----+
+|   o|       2 | |    |        o| |  5 |         |
++    +    +----+ +    +    +----+ +    +    +    +
+|    |    |   o| |    |    |@   | |    |    |  Q |
++    +    +    + +    +    +    + +    +    +    +
+|  2 |         | |         |    | |    |@   |    |
++----+----+----+ +----+----+----+ +----+----+----+
++----+----+----+ +----+----+----+ +----+----+----+
+|  5 |    |    | |   o|  4 |   o| |         |    |
++    +    +    + +    +    +    + +    +    +    +
+|        o|   o| |     @  o   7 | |    |    | 10 |
++----+    +----+ +----+    +    + +    +    +----+
+|            5 | |         |    | |   o|  K      |
++----+----+----+ +----+----+----+ +----+----+----+
+
+Solving . . . .  95.3733 ms
+
++----+----+----+ +----+----+----+ +----+----+----+
+|  Ko|  3    2 | |  Q |  K    Ao| |  5 |  A    K |
++    +    +----+ +    +    +----+ +    +    +    +
+|  ? |  2 |  5o| |  J |  Q |@ 6 | |  4 |  2 |  Q |
++    +    +    + +    +    +    + +    +    +    +
+|  2 |  3    4 | | 10    J |  7 | |  3 |@ A |  J |
++----+----+----+ +----+----+----+ +----+----+----+
++----+----+----+ +----+----+----+ +----+----+----+
+|  5 |  8 |  9 | |  9o|  4 |  8o| | 10    J |  9 |
++    +    +    + +    +    +    + +    +    +    +
+|  6    7o|  8o| | 10  @ ?o   7 | |  9 |  Q | 10 |
++----+    +----+ +----+    +    + +    +    +----+
+|  7    6    5 | |  3    4 |  6 | |  8o|  K    A |
++----+----+----+ +----+----+----+ +----+----+----+
+
+As fun as it would be to go to higher dimensions, I suspect that
+you have better things to do with your time.
+
+This program can be run with command line options to solve puzzles
+presented on standard input. The options are case sensitive.
+
+  -Hour
+      The standard 4 row, 6 column hour puzzle,
+      but with torus topology allowed.
+
+  -Card3D
+      The deck of cards puzzle with 6 rows, 3 columns and 3 levels.
+
+  -Card4D
+      The 4D puzzle with 3 rows, 3 columns, 3 levels and 2 volumes.
+
+  -UnitTest
+      Runs the unit test suite, which may be excluded at compile time.
+
+
+
