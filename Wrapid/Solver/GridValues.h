@@ -9,7 +9,7 @@
 #include "Solver/CoordinateNext.h"
 #include "Solver/Symbol.h"
 
-#include <hash_map>
+#include <unordered_map>
 #include <assert.h>
 
 #ifdef TRACE
@@ -33,13 +33,13 @@ class Solver::GridValues
 {
 public:
     typedef Coordinate<Dimensions> Coord;
-    typedef stdext::hash_map<Coord, Symbol, CoordinateOrder<Dimensions> > Values;
-    typedef stdext::hash_map<Symbol, int> SymbolCounts;
+    typedef std::unordered_map<Coord, Symbol, CoordinateOrder<Dimensions> > Values;
+    typedef std::unordered_map<Symbol, int> SymbolCounts;
     typedef typename Values::const_iterator const_iterator;
 
     GridValues(Coord size)
         : mSize(size)
-        , mValues(CoordinateOrder<Dimensions>(size))
+        , mValues(10, CoordinateOrder<Dimensions>(size))
     {
     }
 

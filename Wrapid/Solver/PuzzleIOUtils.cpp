@@ -118,7 +118,7 @@ std::string PuzzleIOUtils::asString(int value)
 
 PuzzleIOUtils::Strings PuzzleIOUtils::asStrings(const char** puzzle, int lineCount)
 {
-    std::vector<const std::string> lines;
+    std::vector<std::string> lines;
     for(int i = 0; i < lineCount; ++i)
     {
         lines.push_back(puzzle[i]);

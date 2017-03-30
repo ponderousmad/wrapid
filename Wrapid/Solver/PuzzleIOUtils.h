@@ -27,7 +27,7 @@ public:
     typedef const std::string Rep;
     typedef std::map<Rep, Symbol> SymbolFinder;
     typedef std::map<Symbol, Rep> OutputRepresentations;
-    typedef std::vector<const std::string> Strings;
+    typedef std::vector<std::string> Strings;
 
     enum
     {

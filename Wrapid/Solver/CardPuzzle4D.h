@@ -33,7 +33,7 @@ public:
 
     // See CardPuzzle4DIO for required format.
     ParseResult parse(const char** puzzle);
-    ParseResult parse(const std::vector<const std::string>& puzzle);
+    ParseResult parse(const std::vector<std::string>& puzzle);
 
     SolveResult findNextSolution();
 

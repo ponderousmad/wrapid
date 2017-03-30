@@ -35,7 +35,7 @@ ParseResult CardPuzzle3D::parse(const char** puzzle)
     return mSolver->parse(puzzle);
 }
 
-ParseResult CardPuzzle3D::parse(const std::vector<const std::string>& puzzle)
+ParseResult CardPuzzle3D::parse(const std::vector<std::string>& puzzle)
 {
     return mSolver->parse(puzzle);
 }

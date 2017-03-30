@@ -103,7 +103,7 @@ namespace
     {
         const int kMaxLineLength = 1000;
         char buffer[kMaxLineLength];
-        std::vector<const std::string> lines;
+        std::vector<std::string> lines;
         std::string line;
         while(std::cin.good())
         {
@@ -120,9 +120,9 @@ namespace
         Solver::ParseResult result = puzzle.parse(lines);
         if(result == Solver::kParseSucceed)
         {
-            Solver::SolveResult result = showSolving(puzzle);
+            Solver::SolveResult nextResult = showSolving(puzzle);
 
-            switch(result)
+            switch(nextResult)
             {
             case Solver::kFoundSolution:
                 std::cout << "The following solution was found: " << std::endl;
@@ -135,7 +135,7 @@ namespace
                 pauseForInput();
                 return 0;
             }
-            return -result;
+            return -nextResult;
         }
         else
         {

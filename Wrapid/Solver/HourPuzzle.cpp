@@ -34,7 +34,7 @@ ParseResult HourPuzzle::parse(const char** puzzle)
     return mSolver->parse(puzzle);
 }
 
-ParseResult HourPuzzle::parse(const std::vector<const std::string>& puzzle)
+ParseResult HourPuzzle::parse(const std::vector<std::string>& puzzle)
 {
     return mSolver->parse(puzzle);
 }

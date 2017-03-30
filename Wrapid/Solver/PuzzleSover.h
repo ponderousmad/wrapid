@@ -36,7 +36,7 @@ namespace Solver
             return parse(Solver::asStrings(puzzle, mGrid.getSize()));
         }
 
-        ParseResult parse(const std::vector<const std::string>& puzzle)
+        ParseResult parse(const std::vector<std::string>& puzzle)
         {
             GridValues<Dimensions> values(mGrid.getSize());
             ParseResult result = Solver::parse(mGrid, values, puzzle);
